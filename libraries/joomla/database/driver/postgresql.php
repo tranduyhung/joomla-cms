@@ -349,19 +349,19 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		$tableSub = $this->replacePrefix($table);
 
 		$this->setQuery('
-			SELECT a.attname AS "column_name",
-				pg_catalog.format_type(a.atttypid, a.atttypmod) as "type",
+			SELECT a.attname AS "Field",
+				pg_catalog.format_type(a.atttypid, a.atttypmod) as "Type",
 				CASE WHEN a.attnotnull IS TRUE
 					THEN \'NO\'
 					ELSE \'YES\'
-				END AS "null",
+				END AS "Null",
 				CASE WHEN pg_catalog.pg_get_expr(adef.adbin, adef.adrelid, true) IS NOT NULL
 					THEN pg_catalog.pg_get_expr(adef.adbin, adef.adrelid, true)
 				END as "Default",
 				CASE WHEN pg_catalog.col_description(a.attrelid, a.attnum) IS NULL
 				THEN \'\'
 				ELSE pg_catalog.col_description(a.attrelid, a.attnum)
-				END  AS "comments"
+				END  AS "Comments"
 			FROM pg_catalog.pg_attribute a
 			LEFT JOIN pg_catalog.pg_attrdef adef ON a.attrelid=adef.adrelid AND a.attnum=adef.adnum
 			LEFT JOIN pg_catalog.pg_type t ON a.atttypid=t.oid
@@ -380,14 +380,14 @@ class JDatabaseDriverPostgresql extends JDatabaseDriver
 		{
 			foreach ($fields as $field)
 			{
-				$result[$field->column_name] = preg_replace("/[(0-9)]/", '', $field->type);
+				$result[$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 			}
 		}
 		else
 		{
 			foreach ($fields as $field)
 			{
-				$result[$field->column_name] = $field;
+				$result[$field->Field] = $field;
 			}
 		}
 
