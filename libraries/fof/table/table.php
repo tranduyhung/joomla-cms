@@ -2149,7 +2149,7 @@ class FOFTable extends FOFUtilsObject implements JTableInterface
 			{
 				foreach (self::$tableFieldCache[$tableName] as $field)
 				{
-					if (strtolower($field->type) == 'timestamp without time zone')
+					if (strtolower($field->Type) == 'timestamp without time zone')
 					{
 						if (stristr($field->Default, '\'::timestamp without time zone'))
 						{
